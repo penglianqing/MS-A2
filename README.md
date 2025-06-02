@@ -109,7 +109,7 @@ mv AMDGopDriver.rom vbios_1002_164e.bin /usr/share/kvm/
 -- PCI 设备: 核显, RAM-BAR, prime GPU, PCI-Express; 声卡, RAM-BAR, PCI-Express
 -- USB 设备: 鼠标, 键盘
 选项:
--- 引导顺序: win11, VirtIO, 磁盘
+-- 引导顺序: ISO 镜像, 磁盘
 ```
 
 vim /etc/pve/qemu-server/100.conf
