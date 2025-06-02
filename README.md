@@ -45,7 +45,7 @@ wget -q -O /root/pve_source.tar.gz 'http://szrq.hkfree.work/pve-source/pve_sourc
 
 vim /etc/default/grub
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="quiet initcall_blacklist=sysfb_init pcie_acs_override=downstream,multifunction"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet iommu=pt initcall_blacklist=sysfb_init pcie_acs_override=downstream,multifunction pci=nommconf"
 ```
 
 update-grub
@@ -75,11 +75,12 @@ lspci -D -nn | grep Audio
 4. 准备 efi 和 vbios
 (1) 使用 EFI 工具 dump BIOS
 -- U 盘格式化为 FAT32, 拷贝 EFI
--- 开机时按 Del 进入 Bios 设置界面, Secure Boot 设置密码, 关闭安全引导，模式改为Customs
+-- 开机时按 Del 进入 Bios 设置界面, Set Administrator Password 设置密码, 关闭 Secure Boot，模式改为 Custom
 -- 插入 U 盘, 重启进入 UEFI SHELL
 -- afu_bk.nsh
 -- mv backup.bin BIOS/MS_A2_bios.bin
 -- reset
+-- 恢复至开启 Secure Boot
 
 (2) 使用 Modding 工具提取 AMDGopDriver.efi
 -- 安装 VC_redist.x64.exe 和 VC_redist.x86.exe
