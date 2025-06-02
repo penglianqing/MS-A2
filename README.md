@@ -97,11 +97,11 @@ wget 192.168.2.165:1234/vbios && chmod +x vbios && ./vbios
 wget 192.168.2.165:1234/AMDGopDriver.rom
 mv AMDGopDriver.rom vbios_1002_164e.bin /usr/share/kvm/
 
-5. install windows11
+5. install fnOS
 ```
 创建虚拟机:
--- 操作系统: ISO 镜像, 类别 Microsoft Windows, 为 VirtIO 驱动程序添加额外驱动器， ISO 镜像
--- 系统: 显卡无, 机型 q35, BIOS OVMF(UEFI), 添加 TPM
+-- 操作系统: ISO 镜像
+-- 系统: 显卡无, 机型 q35, BIOS OVMF(UEFI)
 -- 磁盘: SCSI
 -- CPU: host
 -- 网络：VirtIO
@@ -118,8 +118,30 @@ hostpci0: 0000:01:00.0,pcie=1,romfile=vbios_1002_164e.bin,x-vga=1
 hostpci1: 0000:01:00.1,romfile=AMDGopDriver.rom
 ```
 
-安装完成 win11 后, 关闭休眠和移除 iso.
+6. 优化效能
+(curl -Lf -o /tmp/temp.sh https://raw.githubusercontent.com/a904055262/PVE-manager-status/main/showtempcpufreq.sh || curl -Lf -o /tmp/temp.sh https://gh-proxy.com/https://raw.githubusercontent.com/a904055262/PVE-manager-status/main/showtempcpufreq.sh) && chmod +x /tmp/temp.sh && /tmp/temp.sh remod
+
+command + shift + R 刷新浏览器缓存
+
+apt install --reinstall pve-manager=$(dpkg -l pve-manager | tail -n 1 | awk '{print $3}')
+
+apt install --reinstall proxmox-widget-toolkit=$(dpkg -l proxmox-widget-toolkit | tail -n 1 | awk '{print $3}')
+
+apt install cpufrequtils
+
+cpufreq-info
+
+vim /etc/default/grub
+```
+amd_pstate=passive
+```
+update-grub
+
+reboot
+
+cpupower -c all frequency-set -g ondemand
 
 ref:
 1. https://diyforfun.cn/712.html
 2. https://diyforfun.cn/1058.html
+3. https://www.geekxw.top/2794/
